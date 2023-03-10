@@ -1,16 +1,21 @@
 ﻿using System;
+using MongoDB.Bson.Serialization.Attributes;
+
 namespace BurgerBook_API.Models
 {
 	public class BurgerMenuItem
 	{
-		public string Name { get; set; }
-		public double Price { get; set; }
-		public string Description { get; set; }
-		public byte[] Picture { get; set; }
+        [BsonElement("name")]
+        public string? Name { get; set; }
 
-		public BurgerMenuItem()
-		{
-		}
+        [BsonElement("price")]
+        public double? Price { get; set; }
+
+        [BsonElement("description")]
+        public string? Description { get; set; }
+
+        [BsonElement("picture")]
+        public byte[]? Picture { get; set; }
 	}
 }
 

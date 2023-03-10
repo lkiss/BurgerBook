@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 25.0.1705.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BurgerBook_API", "BurgerBook_API\BurgerBook_API.csproj", "{906CAC49-9B01-4370-8AFF-86D37C90C0E5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BurgerBook", "BurgerBook_API\BurgerBook.csproj", "{906CAC49-9B01-4370-8AFF-86D37C90C0E5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

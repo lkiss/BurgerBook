@@ -1,18 +1,35 @@
 ﻿using System;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
+
 namespace BurgerBook_API.Models
 {
 	public class BurgerReview
 	{
-		public double OverallRating { get; set; }
-		public double TasteRating { get; set; }
-		public double TextureRating { get; set; }
-		public double VisualRating { get; set; }
-		public string Comment { get; set; }
-		public byte[] Picture { get; set; }
+        [BsonId]
+        [BsonRepresentation(BsonType.ObjectId)]
+        public string Id { get; set; }
 
-		public BurgerReview()
-		{
-		}
+        [BsonElement("burgerplaceid")]
+        public string BurgerPlaceId { get; set; }
+
+        [BsonElement("overallrating")]
+        public double OverallRating { get; set; }
+
+        [BsonElement("tasterating")]
+        public double TasteRating { get; set; }
+
+        [BsonElement("texturerating")]
+        public double TextureRating { get; set; }
+
+        [BsonElement("visualrating")]
+        public double VisualRating { get; set; }
+
+        [BsonElement("comment")]
+        public string? Comment { get; set; }
+
+        [BsonElement("picture")]
+        public byte[]? Picture { get; set; }
 	}
 }
 
