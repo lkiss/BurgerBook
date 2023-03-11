@@ -40,6 +40,12 @@ namespace BurgerBook.Services
 
         public async Task RemoveAsync(string id) =>
             await _burgerReviewCollection.DeleteOneAsync(x => x.Id == id);
+
+        public async Task RemoveByBurgerPlaceIdAsync(string burgerPlaceId)
+        {
+            var filterDefinition = Builders<BurgerReview>.Filter.Eq(x => x.BurgerPlaceId, burgerPlaceId);
+            await _burgerReviewCollection.DeleteManyAsync(filterDefinition);
+        }
     }
 }
 

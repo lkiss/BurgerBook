@@ -7,6 +7,11 @@ using BurgerBook.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using MongoDB.Bson;
+using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Models;
+using System.Reflection.Metadata;
+using Azure.Storage;
 
 namespace BurgerBook_API.Controllers
 {
@@ -15,10 +20,12 @@ namespace BurgerBook_API.Controllers
     public class BurgerReviewController : ControllerBase
     {
         private readonly BurgerReviewService _burgerReviewService;
+        private readonly BlobServiceClient _blobServiceClient;
 
-        public BurgerReviewController(BurgerReviewService burgerReviewService)
+        public BurgerReviewController(BurgerReviewService burgerReviewService, BlobServiceClient blobServiceClient)
         {
             _burgerReviewService = burgerReviewService;
+            _blobServiceClient = blobServiceClient;
         }
 
         [HttpGet]
@@ -50,29 +57,54 @@ namespace BurgerBook_API.Controllers
             return burgerReview;
         }
 
-        [HttpPost("{burgerPlaceId:length(24)}")]
-        public async Task<IActionResult> Add(string burgerPlaceId)
+        [HttpPost()]
+        public async Task<IActionResult> Add([FromBody] BurgerReview newBurgerReview)
         {
-            var newBurgerReview = new BurgerReview() { BurgerPlaceId = burgerPlaceId };
+            newBurgerReview.Id = ObjectId.GenerateNewId().ToString();
 
             await this._burgerReviewService.CreateAsync(newBurgerReview);
 
             return CreatedAtAction(nameof(Get), new { id = newBurgerReview.Id }, newBurgerReview);
         }
 
-        [HttpPut("{id:length(24)}")]
-        public async Task<IActionResult> Update(string id, BurgerReview updatedBurgerReview)
+        [HttpPost("uploadreviewimage")]
+        public async Task<IActionResult> UploadReviewImage([FromQuery] string? reviewId, [FromQuery] string? placeId, IFormFile file)
         {
-            var burgerReview = await _burgerReviewService.GetAsync(id);
+            long size = file.Length;
+            var fileName = reviewId + ".jpeg";
+
+            if (file.Length > 0 && file.Length < 2048000)
+            {
+                using (var stream = file.OpenReadStream())
+                {
+                    var blobContainerClient = _blobServiceClient.GetBlobContainerClient("burgerbookimages");
+                    var blobClient = blobContainerClient.GetBlobClient(fileName);
+
+                    var blobHttpHeader = new BlobHttpHeaders { ContentType = "image/jpeg" };
+                    var uploadedBlob = await blobClient.UploadAsync(stream, new BlobUploadOptions { HttpHeaders = blobHttpHeader });
+                }
+            }
+            else
+            {
+                return BadRequest(new { error = "Empty file or file bigger than 2MB is not allowed" });
+            }
+
+            return Ok(new { size, reviewId, placeId });
+        }
+
+        [HttpPut()]
+        public async Task<IActionResult> Update([FromBody] BurgerReview updatedBurgerReview)
+        {
+            var burgerReview = await _burgerReviewService.GetAsync(updatedBurgerReview.Id);
 
             if (burgerReview is null)
             {
                 return NotFound();
             }
 
-            updatedBurgerReview.Id = burgerReview.Id;
+            updatedBurgerReview.BurgerPlaceId = burgerReview.BurgerPlaceId;
 
-            await _burgerReviewService.UpdateAsync(id, updatedBurgerReview);
+            await _burgerReviewService.UpdateAsync(updatedBurgerReview.Id, updatedBurgerReview);
 
             return NoContent();
         }

@@ -274,3 +274,7 @@
 /Users/kisslaszlo/Projects/BurgerBook/BurgerBook_API/obj/Debug/net6.0/BurgerBook.pdb
 /Users/kisslaszlo/Projects/BurgerBook/BurgerBook_API/obj/Debug/net6.0/BurgerBook.genruntimeconfig.cache
 /Users/kisslaszlo/Projects/BurgerBook/BurgerBook_API/obj/Debug/net6.0/ref/BurgerBook.dll
+/Users/kisslaszlo/Projects/BurgerBook/BurgerBook_API/bin/Debug/net6.0/Azure.Identity.dll
+/Users/kisslaszlo/Projects/BurgerBook/BurgerBook_API/bin/Debug/net6.0/Microsoft.Identity.Client.dll
+/Users/kisslaszlo/Projects/BurgerBook/BurgerBook_API/bin/Debug/net6.0/Microsoft.Identity.Client.Extensions.Msal.dll
+/Users/kisslaszlo/Projects/BurgerBook/BurgerBook_API/bin/Debug/net6.0/Microsoft.IdentityModel.Abstractions.dll

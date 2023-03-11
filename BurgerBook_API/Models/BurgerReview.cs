@@ -28,8 +28,8 @@ namespace BurgerBook_API.Models
         [BsonElement("comment")]
         public string? Comment { get; set; }
 
-        [BsonElement("picture")]
-        public byte[]? Picture { get; set; }
+        [BsonIgnore]
+        public string? PictureUrl { get; set; }
 	}
 }
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using BurgerBook.Models;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
@@ -22,7 +23,8 @@ namespace BurgerBook_API.Models
         [BsonElement("menu")]
         public BurgerMenu? Menu { get; set; }
 
-        public Dictionary<DayOfWeek, Tuple<DateTime, DateTime>>? OpeningHours { get; set; }
+        [BsonElement("openinghours")]
+        public Dictionary<string, OpeningHours>? OpeningHours { get; set; }
 
     }
 }

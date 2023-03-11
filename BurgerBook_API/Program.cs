@@ -1,4 +1,6 @@
-﻿using BurgerBook.Models.Database;
+﻿using Azure.Identity;
+using Azure.Storage.Blobs;
+using BurgerBook.Models.Database;
 using BurgerBook.Services;
 using MongoDB.Bson.Serialization.Conventions;
 using MongoDB.Driver;
@@ -18,6 +20,10 @@ builder.Services.Configure<BurgerBookDatabaseSettings>(
 
 builder.Services.AddSingleton<BurgerPlaceService>();
 builder.Services.AddSingleton<BurgerReviewService>();
+builder.Services.AddSingleton<BlobServiceClient>(x =>
+    new BlobServiceClient(
+        new Uri("https://kisslacstorage.blob.core.windows.net"),
+        new DefaultAzureCredential(new DefaultAzureCredentialOptions() { ExcludeEnvironmentCredential = true })));
 
 var app = builder.Build();
 

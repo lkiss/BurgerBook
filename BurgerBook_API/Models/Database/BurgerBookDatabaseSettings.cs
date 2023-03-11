@@ -7,7 +7,9 @@ namespace BurgerBook.Models.Database
 
         public string DatabaseName { get; set; } = null!;
 
-        public string BurgerPlacesCollectionName { get; set; } = null!;
+        public string BurgerPlaceCollectionName { get; set; } = null!;
+
+        public string BurgerReviewCollectionName { get; set; } = null!;
     }
 }
 

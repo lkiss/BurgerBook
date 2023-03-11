@@ -17,10 +17,12 @@ namespace BurgerBook_API.Controllers
     public class BurgerPlaceController : ControllerBase
     {
         private readonly BurgerPlaceService _burgerPlaceService;
+        private readonly BurgerReviewService _burgerReviewService;
 
-        public BurgerPlaceController(BurgerPlaceService burgerPlaceService)
+        public BurgerPlaceController(BurgerPlaceService burgerPlaceService, BurgerReviewService burgerReviewService)
         {
             _burgerPlaceService = burgerPlaceService;
+            _burgerReviewService = burgerReviewService;
         }
 
         [HttpGet]
@@ -40,9 +42,9 @@ namespace BurgerBook_API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add()
+        public async Task<IActionResult> Add([FromBody] BurgerPlace newBurgerPlace)
         {
-            var newBurgerPlace = new BurgerPlace() { Name = "BestBurgers" };
+            newBurgerPlace.Id = ObjectId.GenerateNewId().ToString();
 
             await this._burgerPlaceService.CreateAsync(newBurgerPlace);
 
@@ -52,14 +54,14 @@ namespace BurgerBook_API.Controllers
         [HttpPut("{id:length(24)}")]
         public async Task<IActionResult> Update(string id, BurgerPlace updatedBurgerPlace)
         {
-            var burgerPlace = await _burgerPlaceService.GetAsync(id);
+            var originalBurgerPlace = await _burgerPlaceService.GetAsync(id);
 
-            if (burgerPlace is null)
+            if (originalBurgerPlace is null)
             {
                 return NotFound();
             }
 
-            updatedBurgerPlace.Id = burgerPlace.Id;
+            updatedBurgerPlace.Id = originalBurgerPlace.Id;
 
             await _burgerPlaceService.UpdateAsync(id, updatedBurgerPlace);
 
@@ -76,6 +78,7 @@ namespace BurgerBook_API.Controllers
                 return NotFound();
             }
 
+            await _burgerReviewService.RemoveByBurgerPlaceIdAsync(id);
             await _burgerPlaceService.RemoveAsync(id);
 
             return NoContent();
