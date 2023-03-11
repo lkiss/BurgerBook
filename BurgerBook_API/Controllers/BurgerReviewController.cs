@@ -61,7 +61,7 @@ namespace BurgerBook_API.Controllers
         public async Task<IActionResult> Add([FromBody] BurgerReview newBurgerReview)
         {
             newBurgerReview.Id = ObjectId.GenerateNewId().ToString();
-
+            
             await this._burgerReviewService.CreateAsync(newBurgerReview);
 
             return CreatedAtAction(nameof(Get), new { id = newBurgerReview.Id }, newBurgerReview);

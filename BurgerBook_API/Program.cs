@@ -5,6 +5,7 @@ using BurgerBook.Services;
 using MongoDB.Bson.Serialization.Conventions;
 using MongoDB.Driver;
 
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -24,6 +25,15 @@ builder.Services.AddSingleton<BlobServiceClient>(x =>
     new BlobServiceClient(
         new Uri("https://kisslacstorage.blob.core.windows.net"),
         new DefaultAzureCredential(new DefaultAzureCredentialOptions() { ExcludeEnvironmentCredential = true })));
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: MyAllowSpecificOrigins,
+                      policy =>
+                      {
+                          policy.WithOrigins("localhost");
+                      });
+});
 
 var app = builder.Build();
 
