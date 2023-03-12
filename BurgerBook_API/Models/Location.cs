@@ -8,8 +8,8 @@ namespace BurgerBook_API.Models
         [BsonElement("longitude")]
         public double Longitude { get; set; }
 
-        [BsonElement("altitude")]
-        public double Altitude { get; set; }
+        [BsonElement("latitude")]
+        public double Latitude { get; set; }
 
 	}
 }
