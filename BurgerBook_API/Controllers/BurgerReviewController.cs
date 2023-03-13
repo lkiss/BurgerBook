@@ -45,8 +45,13 @@ namespace BurgerBook_API.Controllers
         }
 
         [HttpGet("getbyburgerplaceid/{burgerPlaceId:length(24)}")]
-        public async Task<ActionResult<List<BurgerReview>>> GetByBurgerPlaceId(string burgerPlaceId)
+        public async Task<ActionResult<List<BurgerReview>>> GetByBurgerPlaceId(string? burgerPlaceId)
         {
+            if (string.IsNullOrEmpty(burgerPlaceId))
+            {
+                return new List<BurgerReview>();
+            }
+
             var burgerReview = await this._burgerReviewService.GetByBurgerPlaceIdAsync(burgerPlaceId);
 
             if (burgerReview == null)
