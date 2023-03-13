@@ -12,6 +12,7 @@ using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using System.Reflection.Metadata;
 using Azure.Storage;
+using BurgerBook.Models.Constants;
 
 namespace BurgerBook_API.Controllers
 {
@@ -66,6 +67,7 @@ namespace BurgerBook_API.Controllers
         public async Task<IActionResult> Add([FromBody] BurgerReview newBurgerReview)
         {
             newBurgerReview.Id = ObjectId.GenerateNewId().ToString();
+            newBurgerReview.PictureUrl = AzureConstants.CDN_URL + "default.jpg";
             
             await this._burgerReviewService.CreateAsync(newBurgerReview);
 
