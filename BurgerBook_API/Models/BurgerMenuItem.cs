@@ -19,7 +19,7 @@ namespace BurgerBook_API.Models
         [BsonElement("description")]
         public string? Description { get; set; }
 
-        [BsonElement("picture")]
+        [BsonElement("pictureurl")]
         public string? PictureUrl { get; set; }
 	}
 }

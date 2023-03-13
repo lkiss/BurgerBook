@@ -67,7 +67,7 @@ namespace BurgerBook_API.Controllers
         public async Task<IActionResult> Add([FromBody] BurgerReview newBurgerReview)
         {
             newBurgerReview.Id = ObjectId.GenerateNewId().ToString();
-            newBurgerReview.PictureUrl = AzureConstants.CDN_URL + "default.jpg";
+            newBurgerReview.PictureUrl = AzureConstants.CDN_URL + "/default.jpg";
             
             await this._burgerReviewService.CreateAsync(newBurgerReview);
 
