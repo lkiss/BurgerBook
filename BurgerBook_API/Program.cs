@@ -31,7 +31,8 @@ builder.Services.AddCors(options =>
     options.AddPolicy(name: MyAllowSpecificOrigins,
                       policy =>
                       {
-                          policy.WithOrigins("localhost");
+                          policy.WithOrigins("http://localhost:3000", "https://black-river-001c20103.2.azurestaticapps.net")
+                          .AllowAnyHeader();
                       });
 });
 
@@ -45,6 +46,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors(MyAllowSpecificOrigins);
 
 app.UseAuthorization();
 
