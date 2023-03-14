@@ -67,16 +67,24 @@ namespace BurgerBook_API.Controllers
         public async Task<IActionResult> Add([FromBody] BurgerReview newBurgerReview)
         {
             newBurgerReview.Id = ObjectId.GenerateNewId().ToString();
-            newBurgerReview.PictureUrl = AzureConstants.CDN_URL + "/default.jpg";
-            
+            newBurgerReview.PictureUrl = AzureConstants.CDN_URL
+                + (!string.IsNullOrEmpty(newBurgerReview.PictureUrl) && newBurgerReview.PictureUrl.Equals("true")
+                    ? newBurgerReview.Id
+                    : "default.jpg");
+
             await this._burgerReviewService.CreateAsync(newBurgerReview);
 
             return CreatedAtAction(nameof(Get), new { id = newBurgerReview.Id }, newBurgerReview);
         }
 
         [HttpPost("uploadreviewimage")]
-        public async Task<IActionResult> UploadReviewImage([FromQuery] string? reviewId, [FromQuery] string? placeId, IFormFile file)
+        public async Task<IActionResult> UploadReviewImage([FromQuery] string? reviewId, [FromQuery] string placeId, IFormFile file)
         {
+            if (string.IsNullOrEmpty(placeId))
+            {
+                return BadRequest("placeId must contain a value");
+            };
+
             long size = file.Length;
             var fileName = reviewId + ".jpeg";
 
