@@ -1,10 +1,19 @@
-﻿<Properties GitUserInfo="UsingGIT" StartupConfiguration="{906CAC49-9B01-4370-8AFF-86D37C90C0E5}|BurgerBook_API">
-  <MonoDevelop.Ide.Workbench ActiveDocument="BurgerBook_API/Controllers/BurgerReviewController.cs">
+﻿<Properties StartupConfiguration="{906CAC49-9B01-4370-8AFF-86D37C90C0E5}|BurgerBook_API" GitUserInfo="UsingGIT">
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore>
+      <Breakpoint file="/Users/kisslaszlo/Projects/BurgerBook/BurgerBook_API/Services/AzureStorageService.cs" relfile="BurgerBook_API/Services/AzureStorageService.cs" line="22" column="1" />
+    </BreakpointStore>
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.ItemProperties.BurgerBook PreferredExecutionTarget="/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="BurgerBook_API/Program.cs">
     <Files>
       <File FileName="BurgerBook_API/Controllers/BurgerPlaceController.cs" />
       <File FileName="BurgerBook_API/appsettings.Development.json" />
       <File FileName="BurgerBook_API/appsettings.json" />
-      <File FileName="BurgerBook_API/Program.cs" />
+      <File FileName="BurgerBook_API/Program.cs" Line="36" Column="26" />
       <File FileName="BurgerBook_API/Models/BurgerPlace.cs" />
       <File FileName="BurgerBook_API/Models/BurgerMenu.cs" />
       <File FileName="BurgerBook_API/Models/Address.cs" />
@@ -14,32 +23,23 @@
       <File FileName="BurgerBook_API/Models/OpeningHours.cs" />
       <File FileName="BurgerBook_API/Services/AzureStorageService.cs" />
       <File FileName="BurgerBook_API/Models/BurgerMenuItem.cs" />
-      <File FileName="BurgerBook_API/Controllers/BurgerReviewController.cs" Line="70" Column="69" />
+      <File FileName="BurgerBook_API/Controllers/BurgerReviewController.cs" Line="82" Column="1" />
+      <File FileName="BurgerBook_API/Models/Constants/AzureConstants.cs" Line="6" Column="97" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="BurgerBook_API" expanded="True">
             <Node name="BurgerBook" expanded="True">
-              <Node name="Controllers" expanded="True">
-                <Node name="BurgerReviewController.cs" selected="True" />
-              </Node>
+              <Node name="Controllers" expanded="True" />
               <Node name="Models" expanded="True">
                 <Node name="Constants" expanded="True" />
               </Node>
+              <Node name="Program.cs" selected="True" />
             </Node>
           </Node>
         </State>
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
-  <MonoDevelop.Ide.ItemProperties.BurgerBook PreferredExecutionTarget="/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app" />
-  <MultiItemStartupConfigurations />
-  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore>
-      <Breakpoint file="/Users/kisslaszlo/Projects/BurgerBook/BurgerBook_API/Services/AzureStorageService.cs" relfile="BurgerBook_API/Services/AzureStorageService.cs" line="22" column="1" />
-    </BreakpointStore>
-  </MonoDevelop.Ide.DebuggingService.Breakpoints>
 </Properties>

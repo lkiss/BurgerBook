@@ -13,6 +13,7 @@ using Azure.Storage.Blobs.Models;
 using System.Reflection.Metadata;
 using Azure.Storage;
 using BurgerBook.Models.Constants;
+using System.Text.RegularExpressions;
 
 namespace BurgerBook_API.Controllers
 {
@@ -68,8 +69,8 @@ namespace BurgerBook_API.Controllers
         {
             newBurgerReview.Id = ObjectId.GenerateNewId().ToString();
             newBurgerReview.PictureUrl = AzureConstants.CDN_URL
-                + (!string.IsNullOrEmpty(newBurgerReview.PictureUrl) && newBurgerReview.PictureUrl.Equals("true")
-                    ? newBurgerReview.Id + ".jpeg"
+                + (!string.IsNullOrEmpty(newBurgerReview.PictureUrl) && !string.IsNullOrEmpty(newBurgerReview.PictureUrl)
+                    ? $"{newBurgerReview.Id}.{newBurgerReview.PictureUrl.Split('/')[1]}"
                     : "default.jpg");
 
             await this._burgerReviewService.CreateAsync(newBurgerReview);
@@ -78,33 +79,34 @@ namespace BurgerBook_API.Controllers
         }
 
         [HttpPost("uploadreviewimage")]
-        public async Task<IActionResult> UploadReviewImage([FromQuery] string reviewId, [FromQuery] string placeId, IFormFile file)
+        public async Task<IActionResult> UploadReviewImage([FromQuery] string burgerReviewId, [FromQuery] string burgerPlaceId, IFormFile file)
         {
-            if (string.IsNullOrEmpty(placeId) && string.IsNullOrEmpty(reviewId))
+            if (string.IsNullOrEmpty(burgerPlaceId) && string.IsNullOrEmpty(burgerReviewId))
             {
                 return BadRequest("placeId and reviewId must contain a value");
             };
 
-            long size = file.Length;
-            var fileName = reviewId + ".jpeg";
-
             if (file.Length > 0 && file.Length < 2048000)
             {
+                var imageType = file.ContentType.Split('/')[1];
+                long size = file.Length;
+                var fileName = $"{burgerReviewId}.{imageType}";
+
                 using (var stream = file.OpenReadStream())
                 {
                     var blobContainerClient = _blobServiceClient.GetBlobContainerClient("burgerbookimages");
                     var blobClient = blobContainerClient.GetBlobClient(fileName);
 
-                    var blobHttpHeader = new BlobHttpHeaders { ContentType = "image/jpeg" };
+                    var blobHttpHeader = new BlobHttpHeaders { ContentType = file.ContentType};
                     var uploadedBlob = await blobClient.UploadAsync(stream, new BlobUploadOptions { HttpHeaders = blobHttpHeader });
+
+                    return Ok(new { size, burgerReviewId, burgerPlaceId });
                 }
             }
             else
             {
                 return BadRequest(new { error = "Empty file or file bigger than 2MB is not allowed" });
             }
-
-            return Ok(new { size, reviewId, placeId });
         }
 
         [HttpPut()]
